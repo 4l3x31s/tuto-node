@@ -4,7 +4,7 @@ const app = express();
 app.listen(3000, () => {
     console.log('servidor inicializado')
 })*/
-
+import './database';
 import { App } from './app';
 
 async function main() {
