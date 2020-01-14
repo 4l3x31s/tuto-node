@@ -2,7 +2,7 @@ import express, {Application} from 'express';
 import morgan from 'morgan';
 import IndexRoutes from './routes/index.routes';
 import IndexUsuarios from './routes/usuario.routes';
-import body from 'body-parser';
+import AuthController from './routes/auth.routes';
 export class App {
     private app: Application;
     constructor(private port?: number | string) {
@@ -23,6 +23,7 @@ export class App {
     routes() {
         this.app.use(IndexRoutes);
         this.app.use('/usuarios',IndexUsuarios);
+        this.app.use('/api/auth', AuthController);
     }
     listen() {
         this.app.listen(this.app.get('port'), () => {
