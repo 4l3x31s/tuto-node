@@ -20,6 +20,9 @@ export class App {
         this.app.use(morgan('dev'));
         this.app.use(express.json());
         this.app.use(cors());
+        this.app.use(cors({
+            exposedHeaders: ['Content-Length', 'token', 'Content-Type'],
+          }));
         //this.app.use(body.json());
         //this.app.use(body.urlencoded({extended:true}))
     }
