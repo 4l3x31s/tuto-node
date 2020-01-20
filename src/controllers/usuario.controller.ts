@@ -63,7 +63,7 @@ export async function crearUsuarios(req: Request, res:Response) {
     //creando token
     let token: string = jwt.sign({id: saveUser._id}, process.env.TOKEN_SECRET || 'PRUEBA');
 
-    return res.header('auth-token', token).json(saveUser);
+    return res.header('token', token).json(saveUser);
 }
 
 export async function login(req: Request, res: Response) {
@@ -78,5 +78,5 @@ export async function login(req: Request, res: Response) {
         expiresIn: 60 * 60 * 24
     }); //token vence en 24 horas
     
-    return res.header('auth-token', token).json(usuarioEncontrado);
+    return res.header('token', token).json(usuarioEncontrado);
 }
