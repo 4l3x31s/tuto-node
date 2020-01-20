@@ -3,6 +3,8 @@ import morgan from 'morgan';
 import IndexRoutes from './routes/index.routes';
 import IndexUsuarios from './routes/usuario.routes';
 import AuthController from './routes/auth.routes';
+import cors from 'cors';
+
 export class App {
     private app: Application;
     constructor(private port?: number | string) {
@@ -17,6 +19,7 @@ export class App {
     middlewares() {
         this.app.use(morgan('dev'));
         this.app.use(express.json());
+        this.app.use(cors());
         //this.app.use(body.json());
         //this.app.use(body.urlencoded({extended:true}))
     }

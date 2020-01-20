@@ -3,18 +3,51 @@ import { Response, Request } from "express";
 import jwt from 'jsonwebtoken';
 
 export function obtenerUsuarios(req: Request, res:Response) {
-    let usuario ={
-        nombre: "Juan",
-        apellido: "Perez",
-        edad: 22,
-        pass: "asdasd"
-    };
     Usuario.find().exec()
         .then(datos => {
-            console.log(datos)
+            console.log(datos);
+            return res.json(datos);
         })
-    
-    return res.json(usuario);
+        .catch(err => {
+            console.log(err);
+            return res.json(err);
+        });
+}
+
+export async function actualizarUsuario(req:Request, res: Response){
+    let user: IUsuario = Object.assign(req.body);
+    let usuario: IUsuario = new Usuario({
+        nombre: user.nombre,
+        apellido: user.apellido,
+        edad: user.edad,
+        pass: user.pass,
+        _id: user._id
+    });
+    usuario.pass = await usuario.encryptPassword(usuario.pass); //cifra
+    console.log("data ac")
+    console.log(usuario);
+    Usuario.findByIdAndUpdate(usuario._id, usuario).exec()
+        .then(data => {
+            console.log(data);
+            return res.json("Dato Actualizado");
+        })
+        .catch(err => {
+            console.log(err)
+            return res.json(err);
+        });
+}
+export function eliminarUsuario(req: Request, res: Response) {
+    console.log("params")
+    console.log(req.params);
+    Usuario.findByIdAndDelete(req.params.id).exec()
+        .then(data => {
+            console.log(data);
+            return res.json(data);
+        })
+        .catch(err => {
+            console.log(err);
+            return res.json(err);
+        })
 }
 
 export async function crearUsuarios(req: Request, res:Response) {
